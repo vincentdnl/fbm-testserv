@@ -2,21 +2,26 @@ import aiohttp
 import asyncio
 import json
 from collections import defaultdict
-# from aiohttp.client_reqrep import ClientResponse
+import time
 
 
 async def web_hook(client: aiohttp.ClientSession, status_count):
     json_data = json.dumps(message())
     headers = {'content-type': 'application/json'}
-    async with client.post('http://localhost:8080', data=json_data, headers=headers) as resp:
+    # async with client.post('http://deux-bureau.yaal.fr/', data=json_data, headers=headers) as resp:
+    async with client.post('http://localhost:8081/', data=json_data, headers=headers) as resp:
+        print(resp.text)
         status_count[resp.status] += 1
 
 
 async def main(loop):
     async with aiohttp.ClientSession(loop=loop) as client:
         status_count = defaultdict(int)
-        for index in range(10):
+        start_time = time.time()
+        for index in range(5000):
             await web_hook(client, status_count)
+        stop_time = time.time()
+        print(f"---------- TOTAL EXECTUTION TIME: {stop_time - start_time} ----------")
         print(dict(status_count))
 
 
@@ -25,18 +30,23 @@ def message():
         "object": "page",
         "entry": [
             {
-                "id": "PAGE_ID",
+                "id": "652783874878686",
                 "time": 1458692752478,
                 "messaging": [
                     {
                         "sender": {
-                            "id": "USER_ID"
+                            "id": "1255799917785059"
                         },
                         "recipient": {
-                            "id": "PAGE_ID"
+                            "id": "652783874878686"
                         },
-
-                        # ...
+                        "message": {
+                            "mid": "mid.1457764197618:41d102a3e1ae206a38",
+                            "text": "hello, world!",
+                            "quick_reply": {
+                                "payload": "DEVELOPER_DEFINED_PAYLOAD"
+                            }
+                        }
                     }
                 ]
             }

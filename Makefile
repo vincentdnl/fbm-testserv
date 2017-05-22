@@ -2,7 +2,7 @@ message:
 	./venv/bin/python main.py
 
 run:
-	./venv/bin/gunicorn app:app -k aiohttp.worker.GunicornWebWorker -b localhost:8080 --reload
+	./venv/bin/gunicorn server:app -k aiohttp.worker.GunicornWebWorker -b localhost:8051 --reload
 
 install: install-virtualenv
 
@@ -25,3 +25,7 @@ tests:
 
 watchtests:
 	./scripts/watchtests.sh
+
+.PHONY: config
+config:
+	cp -n config/config.template.yml config.yml
