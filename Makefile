@@ -2,7 +2,7 @@ message:
 	./venv/bin/python main.py
 
 run:
-	./venv/bin/gunicorn server:app -k aiohttp.worker.GunicornWebWorker -b localhost:8051 --reload
+	./venv/bin/gunicorn server:app -k aiohttp.worker.GunicornWebWorker -b localhost:5050 --reload
 
 install: install-virtualenv
 
