@@ -1,8 +1,9 @@
-import aiohttp
 import asyncio
 import json
-from collections import defaultdict
 import time
+from collections import defaultdict
+
+import aiohttp
 
 
 async def web_hook(client: aiohttp.ClientSession, status_count):

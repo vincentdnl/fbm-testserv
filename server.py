@@ -1,8 +1,11 @@
 import asyncio
+import time
+
 import aiohttp
 import aiohttp.web
 import aiohttp.web_request
-import time
+
+import config
 
 time_first_request_handled = None
 number_of_requests = 0
@@ -55,9 +58,7 @@ def make_app(aiohttp_app):
         """
         Adding routes to the aiohttp_application
         """
-        # 'http://localhost:5050/v2.6/me/messages?access_token=ACCESS_TOKEN'
-        the_app.router.add_post('/v2.6/me/messages', receive_posts)
-        the_app.router.add_post('/', receive_posts)
+        the_app.router.add_post(f'/{config.API_VERSION}/me/messages', receive_posts)
 
     add_routes(aiohttp_app)
     return aiohttp_app

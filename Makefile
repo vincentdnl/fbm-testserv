@@ -1,9 +1,15 @@
+PORT = 5050
+
+
+run:
+	./venv/bin/gunicorn server:app -k aiohttp.worker.GunicornWebWorker -b localhost:${PORT} --reload
+
 message:
 	./venv/bin/python main.py
 
-run:
-	./venv/bin/gunicorn server:app -k aiohttp.worker.GunicornWebWorker -b localhost:5050 --reload
-
+################
+## Virtualenv ##
+################
 install: install-virtualenv
 
 create_virtualenv:
@@ -12,20 +18,3 @@ create_virtualenv:
 
 install-virtualenv: create_virtualenv
 	./venv/bin/pip install -r requirements.txt
-
-clean_logs:
-	rm -rf logs
-	mkdir logs
-
-requirements:
-	./venv/bin/pip freeze > requirements.txt
-
-tests:
-	./scripts/tests.sh
-
-watchtests:
-	./scripts/watchtests.sh
-
-.PHONY: config
-config:
-	cp -n config/config.template.yml config.yml
