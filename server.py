@@ -29,6 +29,15 @@ def make_app(aiohttp_app):
         await print_status(elapsed_time, request)
         return aiohttp.web.Response()
 
+    async def get_name(request: aiohttp.web_request.Request):
+        """
+        Getting the full name
+        """
+        return aiohttp.web.json_response({
+            "first_name": "John",
+            "last_name": "Doe",
+        })
+
     async def print_status(elapsed_time, request):
         request_word = "requests" if number_of_requests > 1 else "request"
         requests_per_seconds = f"{COLOR_SEQ % RED}" \
@@ -59,6 +68,7 @@ def make_app(aiohttp_app):
         Adding routes to the aiohttp_application
         """
         the_app.router.add_post(f'/{config.API_VERSION}/me/messages', receive_posts)
+        the_app.router.add_get(f'/{config.API_VERSION}/{{facebook_id:\d+}}', get_name)
 
     add_routes(aiohttp_app)
     return aiohttp_app

@@ -9,8 +9,7 @@ import aiohttp
 async def web_hook(client: aiohttp.ClientSession, status_count):
     json_data = json.dumps(message())
     headers = {'content-type': 'application/json'}
-    # async with client.post('http://deux-bureau.yaal.fr/', data=json_data, headers=headers) as resp:
-    async with client.post('http://localhost:8081/', data=json_data, headers=headers) as resp:
+    async with client.post('http://localhost:8082/', data=json_data, headers=headers) as resp:
         print(resp.text)
         status_count[resp.status] += 1
 
